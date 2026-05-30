@@ -17,7 +17,7 @@ const CoursePage = () => {
       .then((data) => setCourse(data));
 
     // PROTECTED CONTENT
-    fetch(`https://edunova-web-backend.onrender.com/${id}/content`, {
+    fetch(`https://edunova-web-backend.onrender.com/api/courses/${id}/content`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
