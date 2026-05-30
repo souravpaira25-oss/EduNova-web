@@ -64,8 +64,11 @@ function Courses() {
   useEffect(() => {
     //  All Courses
     fetch("https://edunova-web-backend.onrender.com/api/courses")
-      .then(res => res.json())
-      .then(data => setCourses(data));
+  .then((res) => res.json())
+  .then((data) => {
+    console.log("API DATA =", data);
+    setCourses(data);
+  });
 
     //  Purchased Courses
     const token = localStorage.getItem("token");

@@ -49,7 +49,7 @@ const handleAddVideo = async () => {
     return `https://www.youtube.com/embed/${videoId}`;
   };
 
-  await fetch(`http://https://edunova-web-backend.onrender.com/api/courses/add-video/${selectedCourse}`, {
+  await fetch(`https://edunova-web-backend.onrender.com/api/courses/add-video/${selectedCourse}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
