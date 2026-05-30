@@ -136,7 +136,7 @@ function Courses() {
 
                 {/* IMAGE */}
                 <img
-                  src={`https://edunova-web-backend.onrender.com/uploads/${course.image}`}
+                  src={course.image}
                   alt="course"
                   style={{
                     width: "100%",
