@@ -4,23 +4,25 @@ const router = express.Router();
 const Course = require("../models/Course");
 const authMiddleware = require("../middleware/authMiddleware");
 const Purchase = require("../models/Purchase");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinary");
 
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "edunova",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
+
 // Add Course
 router.post("/add", authMiddleware, upload.single("image"), async (req, res) => {
   try {
     const { title, description, price } = req.body;
-    const image = req.file ? req.file.filename : "";
+    const image = req.file ? req.file.path : "";
 
     const course = new Course({
       title,
@@ -98,7 +100,7 @@ router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
 
     // image update
     if (req.file) {
-      updateData.image = req.file.filename;
+      updateData.image = req.file.path;
     }
 
     const updatedCourse = await Course.findByIdAndUpdate(
