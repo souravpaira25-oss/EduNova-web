@@ -16,7 +16,7 @@ function MyCourses() {
       return;
     }
 
-    fetch("http://localhost:5000/api/purchase/my-courses", {
+    fetch("https://edunova-web-backend.onrender.com/api/purchase/my-courses", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -81,7 +81,7 @@ function MyCourses() {
                   {/* IMAGE */}
                   <div className="relative overflow-hidden">
                     <img
-                      src={`http://localhost:5000/uploads/${course.image}`}
+                      src={`https://edunova-web-backend.onrender.com/uploads/${course.image}`}
                       alt={course.title}
                       className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500"
                     />

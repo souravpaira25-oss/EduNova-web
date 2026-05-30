@@ -12,12 +12,12 @@ const CoursePage = () => {
   useEffect(() => {
 
     // PUBLIC COURSE
-    fetch(`http://localhost:5000/api/courses/${id}`)
+    fetch(`https://edunova-web-backend.onrender.com/api/courses/${id}`)
       .then((res) => res.json())
       .then((data) => setCourse(data));
 
     // PROTECTED CONTENT
-    fetch(`http://localhost:5000/api/courses/${id}/content`, {
+    fetch(`https://edunova-web-backend.onrender.com/${id}/content`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -228,7 +228,7 @@ const CoursePage = () => {
           />
 
           <img
-            src={`http://localhost:5000/uploads/${course.image}`}
+            src={`https://edunova-web-backend.onrender.com/${course.image}`}
             alt="course"
             style={{
               width: "100%",

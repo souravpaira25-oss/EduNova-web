@@ -16,7 +16,7 @@ function Courses() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/create-order", {
+    const res = await fetch("https://edunova-web-backend.onrender.com/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -38,7 +38,7 @@ function Courses() {
 
       handler: async function (response) {
 
-        await fetch("http://localhost:5000/verify-payment", {
+        await fetch("https://edunova-web-backend.onrender.com/verify-payment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function Courses() {
 
   useEffect(() => {
     //  All Courses
-    fetch("http://localhost:5000/api/courses")
+    fetch("https://edunova-web-backend.onrender.com/api/courses")
       .then(res => res.json())
       .then(data => setCourses(data));
 
@@ -71,7 +71,7 @@ function Courses() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch("http://localhost:5000/api/purchase/my-courses", {
+      fetch("https://edunova-web-backend.onrender.com/api/purchase/my-courses", {
         headers: {
           Authorization: "Bearer " + token
         }
@@ -133,7 +133,7 @@ function Courses() {
 
                 {/* IMAGE */}
                 <img
-                  src={`http://localhost:5000/uploads/${course.image}`}
+                  src={`https://edunova-web-backend.onrender.com/uploads/${course.image}`}
                   alt="course"
                   style={{
                     width: "100%",

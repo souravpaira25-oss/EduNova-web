@@ -15,7 +15,7 @@ function App() {
   const [setCourses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/courses")
+    fetch("https://edunova-web-backend.onrender.com/api/courses")
       .then(res => res.json())
       .then(data => setCourses(data));
   }, []);

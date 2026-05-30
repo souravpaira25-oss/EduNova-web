@@ -49,7 +49,7 @@ const handleAddVideo = async () => {
     return `https://www.youtube.com/embed/${videoId}`;
   };
 
-  await fetch(`http://localhost:5000/api/courses/add-video/${selectedCourse}`, {
+  await fetch(`http://https://edunova-web-backend.onrender.com/api/courses/add-video/${selectedCourse}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -68,7 +68,7 @@ const handleAddVideo = async () => {
 
   //  FETCH COURSES
   useEffect(() => {
-    fetch("http://localhost:5000/api/courses")
+    fetch("https://edunova-web-backend.onrender.com/api/courses")
       .then(res => res.json())
       .then(data => setCourses(data));
   }, []);
@@ -91,7 +91,7 @@ const handleAddVideo = async () => {
     formData.append("description", description);
     formData.append("image", imageFile);
 
-    await fetch("http://localhost:5000/api/courses/add", {
+    await fetch("https://edunova-web-backend.onrender.com/api/courses/add", {
       method: "POST",
       body: formData,
       headers: {
@@ -105,7 +105,7 @@ const handleAddVideo = async () => {
 
   const handleDeleteVideo = async (courseId, index) => {
     
-  await fetch(`http://localhost:5000/api/courses/delete-video/${courseId}/${index}`, {
+  await fetch(`https://edunova-web-backend.onrender.com/api/courses/delete-video/${courseId}/${index}`, {
     method: "DELETE"
   });
 
@@ -127,7 +127,7 @@ const handleEditVideo = (courseId, video, index) => {
 };
 
 const handleUpdateVideo = async () => {
-  await fetch(`http://localhost:5000/api/courses/update-video/${editVideoCourseId}/${editVideoIndex}`, {
+  await fetch(`https://edunova-web-backend.onrender.com/api/courses/update-video/${editVideoCourseId}/${editVideoIndex}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -170,7 +170,7 @@ const handleUpdateVideo = async () => {
     formData.append("image", imageFile);
   }
 
-  await fetch(`http://localhost:5000/api/courses/${editId}`, {
+  await fetch(`https://edunova-web-backend.onrender.com/api/courses/${editId}`, {
     method: "PUT",
     body: formData,
     headers: {
@@ -186,7 +186,7 @@ const handleDelete = async (id) => {
 
   if (!confirmDelete) return;
 
-  await fetch(`http://localhost:5000/api/courses/${id}`, {
+  await fetch(`https://edunova-web-backend.onrender.com/api/courses/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token")
@@ -289,7 +289,7 @@ const handleDelete = async (id) => {
 
     {/* IMAGE */}
     <img
-      src={`http://localhost:5000/uploads/${course.image}`}
+      src={`https://edunova-web-backend.onrender.com/uploads/${course.image}`}
       alt="course"
       style={{
         width: "120px",
