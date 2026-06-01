@@ -61,7 +61,7 @@ function App() {
               
 
               {/* HERO SECTION */}
-<div className="relative min-h-screen overflow-x-hidden bg-[#030712] text-white">
+<div className="relative min-h-screen overflow-x-hidden overflow-y-hidden bg-[#030712] text-white">
                 <div className="absolute top-[-120px] left-[-100px] w-[350px] h-[350px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
                 <div className="absolute bottom-[-150px] right-[-100px] w-[350px] h-[350px] bg-purple-500/20 blur-[120px] rounded-full"></div>
                 <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px]"></div>
