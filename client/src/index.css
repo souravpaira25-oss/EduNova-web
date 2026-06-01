@@ -203,3 +203,9 @@ code {
 .animate-marquee {
   animation: marquee 20s linear infinite;
 }
+@layer base {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
