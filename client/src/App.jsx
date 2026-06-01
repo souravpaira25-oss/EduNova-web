@@ -1,6 +1,6 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FaBook, FaUser, FaSignInAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import ProtectedRoute from "./ProtectedRoute";
@@ -8,309 +8,194 @@ import MyCourses from "./MyCourses";
 import Courses from "./Courses";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import CoursePage from "./CoursePage";
-// import rahulSharmaProfile from "./assets/Rahulsharma.jpg";
-
 
 function App() {
-  const [setCourses] = useState([]);
+  const [ setCourses] = useState([]);
 
   useEffect(() => {
     fetch("https://edunova-web-backend.onrender.com/api/courses")
       .then(res => res.json())
-      .then(data => setCourses(data));
+      .then(data => setCourses(data))
+      .catch(err => console.error("Error fetching courses:", err));
   }, []);
+
   useEffect(() => {
-  const elements = document.querySelectorAll(".fade-in");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
+    const elements = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
     });
-  });
+    elements.forEach((el) => observer.observe(el));
+  }, []);
 
-  elements.forEach((el) => observer.observe(el));
-}, []);
-
-   return (
+  return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/courses" element={<Courses />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/course/:id" element={<CoursePage />} />
-      <Route path="/my-courses" element={<MyCourses />} />
-      <Route
-  path="/my-courses"
-  element={
-    <ProtectedRoute>
-      <MyCourses />
-    </ProtectedRoute>
-  }
-/>
-    <Route path="/" element={
-      
-    <div style={{
-      minHeight: "100vh",
-      backgroundColor: "#0f172a",
-      color: "white"
-    }}>
-
-{/*  NAVBAR */}
-<div style={{
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "15px 40px",
-  background: "linear-gradient(90deg, #020617, #0f172a)",
-  borderBottom: "1px solid #1e293b",
-  boxSizing: "border-box",
-  boxShadow: "0 2px 10px rgba(0,0,0,0.5)"
-}}>
-
-  {/* LOGO */}
-  <h2 style={{
-    margin: 0,
-    fontWeight: "bold",
-    background: "linear-gradient(90deg, #3b82f6, #22c55e)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent"
-  }}>
-    EduNova 🚀
-  </h2>
-
-  {/*  MENU */}
-  <div style={{ display: "flex", gap: "25px", alignItems: "center" }}>
-    
-    <span
-    onClick={() => window.location.href = "/courses"} 
-    style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}>
-      <FaBook /> Courses
-    </span>
-
-    <span
-      onClick={() => window.location.href = "/my-courses"}
-      style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}
-    >
-    <FaUser /> My Courses
-    </span>
-
-    {localStorage.getItem("token") ? (
-  <span
-    onClick={() => {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    }}
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      cursor: "pointer",
-      padding: "6px 10px",
-      borderRadius: "6px",
-      color: "#ffffff", 
-      backgroundColor: "#ef4444"
-    }}
-  >
-    <FaSignInAlt /> Logout
-  </span>
-) : (
-  <span
-    onClick={() => window.location.href = "/login"}
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      cursor: "pointer",
-      padding: "6px 10px",
-      borderRadius: "6px",
-      backgroundColor: "#22c55e"
-    }}
-  >
-    <FaSignInAlt /> Login
-  </span>
-)}
-
-  </div>
-
-</div>
-{/* HERO SECTION */}
-<div className="relative min-h-screen overflow-hidden bg-[#030712] text-white">
-
-  {/* BACKGROUND LIGHTS */}
-  <div className="absolute top-[-120px] left-[-100px] w-[350px] h-[350px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
-
-  <div className="absolute bottom-[-150px] right-[-100px] w-[350px] h-[350px] bg-purple-500/20 blur-[120px] rounded-full"></div>
-
-  {/* GRID */}
-  <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px]"></div>
-
-  <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col lg:flex-row items-center justify-between gap-16">
-
-    {/* LEFT SIDE */}
-    <div className="max-w-2xl">
-
-      {/* BADGE */}
-      <div className="inline-flex items-center gap-3 bg-slate-900/80 border border-cyan-500/20 backdrop-blur-xl px-5 py-3 rounded-full mb-8">
-
-        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-
-        <span className="text-slate-300 tracking-wide">
-          Trusted by 10,000+ learners
-        </span>
-
-      </div>
-
-      {/* TITLE */}
-      <h1 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight">
-
-        Learn
-        <br />
-
-        <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 bg-clip-text text-transparent">
-          Future Skills
-        </span>
-
-      </h1>
-
-      {/* DESCRIPTION */}
-      <p className="mt-10 text-slate-400 text-xl leading-9 max-w-xl">
-
-        Learn coding, AI, development, and job-ready skills
-        with modern premium learning experiences.
-
-      </p>
-
-      {/* BUTTONS */}
-      <div className="flex flex-wrap gap-5 mt-12">
-
-        <button className="px-8 py-5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)] hover:scale-105 transition-all duration-300"
-        onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
-        onMouseOut={(e) => e.target.style.transform = "scale(1)"}
-        >
-
-          🚀 Explore Courses
-
-        </button>
-
-        <button className="px-8 py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-semibold text-lg hover:bg-slate-800 transition-all duration-300">
-
-          ▶ Watch Demo
-
-        </button>
-
-      </div>
-
-      {/* STATS */}
-      <div className="grid grid-cols-3 gap-5 mt-16">
-
-        <div className="bg-slate-900/70 border border-slate-800 rounded-3xl backdrop-blur-xl p-6">
-
-          <h2 className="text-4xl font-black text-cyan-400">
-            10K+
-          </h2>
-
-          <p className="text-slate-400 mt-2">
-            Students
-          </p>
-
-        </div>
-
-        <div className="bg-slate-900/70 border border-slate-800 rounded-3xl backdrop-blur-xl p-6">
-
-          <h2 className="text-4xl font-black text-green-400">
-            120+
-          </h2>
-
-          <p className="text-slate-400 mt-2">
-            Courses
-          </p>
-
-        </div>
-
-        <div className="bg-slate-900/70 border border-slate-800 rounded-3xl backdrop-blur-xl p-6">
-
-          <h2 className="text-4xl font-black text-purple-400">
-            95%
-          </h2>
-
-          <p className="text-slate-400 mt-2">
-            Success Rate
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    {/* RIGHT SIDE DESIGN */}
-    <div className="relative flex items-center justify-center">
-
-      {/* CENTER CIRCLE */}
-      <div className="relative w-[500px] h-[500px] rounded-full border border-cyan-500/20 flex items-center justify-center">
-
-        {/* ROTATING RINGS */}
-        <div className="absolute w-[620px] h-[620px] border border-cyan-500/10 rounded-full animate-spin"
-          style={{ animationDuration: "20s" }}
-        ></div>
-
-        <div className="absolute w-[420px] h-[420px] border border-purple-500/20 rounded-full animate-spin"
-          style={{
-            animationDuration: "12s",
-            animationDirection: "reverse"
-          }}
-        ></div>
-
-        {/* CENTER CARD */}
-        <div className="relative z-10 bg-slate-900/80 border border-cyan-500/20 backdrop-blur-2xl rounded-[40px] p-12 shadow-[0_0_80px_rgba(59,130,246,0.3)]">
-
-          <div className="text-center">
-
-            <div className="text-8xl mb-5">
-              🎓
-            </div>
-
-            <h2 className="text-3xl font-black">
-              EduNova
-            </h2>
-
-            <p className="text-slate-400 mt-3">
-              Future Learning Platform
-            </p>
-
-          </div>
-        </div>
-
-        {/* FLOATING CARDS */}
-
-        <div className="absolute top-0 left-20 bg-slate-900 border border-cyan-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl">
-
-          <p className="text-3xl">💻</p>
-
-        </div>
-
-        <div className="absolute bottom-10 right-0 bg-slate-900 border border-purple-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl">
-
-          <p className="text-3xl">🤖</p>
-
-        </div>
-
-        <div className="absolute top-32 right-[-30px] bg-slate-900 border border-green-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl">
-
-          <p className="text-3xl">🚀</p>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>  
-
-{/* TRUSTED COMPANIES MARQUEE */}
-<div className="relative overflow-hidden py-24 bg-black border-y border-slate-800">
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/course/:id" element={<CoursePage />} />
+        
+        <Route
+          path="/my-courses"
+          element={
+            <ProtectedRoute>
+              <MyCourses />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/"
+          element={
+            <div style={{ minHeight: "100vh", backgroundColor: "#0f172a", color: "white" }}>
+              
+              {/* NAVBAR */}
+              <div style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "15px 40px",
+                background: "linear-gradient(90deg, #020617, #0f172a)",
+                borderBottom: "1px solid #1e293b",
+                boxSizing: "border-box",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.5)"
+              }}>
+                {/* LOGO */}
+                <h2 style={{
+                  margin: 0,
+                  fontWeight: "bold",
+                  background: "linear-gradient(90deg, #3b82f6, #22c55e)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}>
+                  EduNova 🚀
+                </h2>
+
+                {/* MENU */}
+                <div style={{ display: "flex", gap: "25px", alignItems: "center" }}>
+                  <span
+                    onClick={() => window.location.href = "/courses"} 
+                    style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}
+                  >
+                    <FaBook /> Courses
+                  </span>
+
+                  <span
+                    onClick={() => window.location.href = "/my-courses"}
+                    style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}
+                  >
+                    <FaUser /> My Courses
+                  </span>
+
+                  {localStorage.getItem("token") ? (
+                    <span
+                      onClick={() => {
+                        localStorage.removeItem("token");
+                        window.location.href = "/";
+                      }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        cursor: "pointer",
+                        padding: "6px 10px",
+                        borderRadius: "6px",
+                        color: "#ffffff", 
+                        backgroundColor: "#ef4444"
+                      }}
+                    >
+                      <FaSignInAlt /> Logout
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => window.location.href = "/login"}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        cursor: "pointer",
+                        padding: "6px 10px",
+                        borderRadius: "6px",
+                        backgroundColor: "#22c55e"
+                      }}
+                    >
+                      <FaSignInAlt /> Login
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* HERO SECTION */}
+              <div className="relative min-h-screen overflow-hidden bg-[#030712] text-white">
+                <div className="absolute top-[-120px] left-[-100px] w-[350px] h-[350px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
+                <div className="absolute bottom-[-150px] right-[-100px] w-[350px] h-[350px] bg-purple-500/20 blur-[120px] rounded-full"></div>
+                <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+                <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-24 flex flex-col lg:flex-row items-center justify-between gap-16">
+                  <div className="max-w-2xl">
+                    <div className="inline-flex items-center gap-3 bg-slate-900/80 border border-cyan-500/20 backdrop-blur-xl px-5 py-3 rounded-full mb-8">
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-slate-300 tracking-wide">Trusted by 10,000+ learners</span>
+                    </div>
+
+                    <h1 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight">
+                      Learn<br />
+                      <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 bg-clip-text text-transparent">
+                        Future Skills
+                      </span>
+                    </h1>
+
+                    <p className="mt-10 text-slate-400 text-xl leading-9 max-w-xl">
+                      Learn coding, AI, development, and job-ready skills with modern premium learning experiences.
+                    </p>
+
+                    <div className="flex gap-4 mt-10">
+                      <button
+                        className="px-8 py-5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)] hover:scale-105 transition-all duration-300"
+                        onClick={() => window.location.href = "/courses"}
+                      >
+                        🚀 Explore Courses
+                      </button>
+
+                      <button
+                        className="px-8 py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-semibold text-lg hover:bg-slate-800 transition-all duration-300"
+                        onClick={() => window.open("https://www.youtube.com/watch?v=YOUR_VIDEO_ID", "_blank")}
+                      >
+                        🎬 Watch Demo
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* STATS & RIGHT SIDE DESIGN */}
+                  <div className="relative flex items-center justify-center">
+                    <div className="relative w-[500px] h-[500px] rounded-full border border-cyan-500/20 flex items-center justify-center">
+                      <div className="absolute w-[620px] h-[620px] border border-cyan-500/10 rounded-full animate-spin" style={{ animationDuration: "20s" }}></div>
+                      <div className="absolute w-[420px] h-[420px] border border-purple-500/20 rounded-full animate-spin" style={{ animationDuration: "12s", animationDirection: "reverse" }}></div>
+
+                      <div className="relative z-10 bg-slate-900/80 border border-cyan-500/20 backdrop-blur-2xl rounded-[40px] p-12 shadow-[0_0_80px_rgba(59,130,246,0.3)]">
+                        <div className="text-center">
+                          <div className="text-8xl mb-5">🎓</div>
+                          <h2 className="text-3xl font-black">EduNova</h2>
+                          <p className="text-slate-400 mt-3">Future Learning Platform</p>
+                        </div>
+                      </div>
+
+                      <div className="absolute top-0 left-20 bg-slate-900 border border-cyan-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl"><p className="text-3xl">💻</p></div>
+                      <div className="absolute bottom-10 right-0 bg-slate-900 border border-purple-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl"><p className="text-3xl">🤖</p></div>
+                      <div className="absolute top-32 right-[-30px] bg-slate-900 border border-green-500/20 px-6 py-4 rounded-2xl backdrop-blur-xl shadow-xl"><p className="text-3xl">🚀</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+{/* COMPANIES MARQUEE */}
+  <div className="relative overflow-hidden py-24 bg-black border-y border-slate-800">
 
   {/* BG GLOW */}
   <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full"></div>
@@ -478,7 +363,7 @@ function App() {
 </div>
 
 {/* FEATURES SECTION */}
-<div className="relative py-32 px-6 lg:px-12 overflow-hidden bg-[#030712] text-white">
+ <div className="relative py-32 px-6 lg:px-12 overflow-hidden bg-[#030712] text-white">
 
   {/* BACKGROUND GLOW */}
   <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full"></div>
@@ -699,9 +584,7 @@ function App() {
   </div>
 </div>
 
-
-{/*  Trust SECTION */}
-{/* PREMIUM TESTIMONIAL SECTION */}
+{/* TESTIMONIALS SECTION */}
 <div className="relative py-36 px-6 lg:px-12 overflow-hidden bg-[#030712] text-white">
 
   {/* BACKGROUND EFFECTS */}
@@ -908,6 +791,7 @@ function App() {
   </div>
 </div>
 
+{/* IMPACT SECTION */}
 <div style={{
   padding: "100px 20px",
   textAlign: "center"
@@ -1164,11 +1048,14 @@ function App() {
 
       <div className="flex flex-wrap justify-center gap-6 mt-14">
 
-        <button className="px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-xl hover:scale-105 transition-all duration-300 shadow-[0_0_50px_rgba(6,182,212,0.4)]">
-
-          Explore Courses 🚀
-
-        </button>
+        <button
+  className="px-8 py-5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)] hover:scale-105 transition-all duration-300"
+onClick={() => window.location.href = "/courses"} 
+  onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
+  onMouseOut={(e) => e.target.style.transform = "scale(1)"}
+>
+  🚀 Explore Courses
+</button>
 
         <button className="px-10 py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-bold text-xl hover:bg-slate-800 transition-all duration-300">
 
@@ -1181,10 +1068,8 @@ function App() {
   </div>
 </div>
 
-
-{/*  FOOTER */}
 {/* FOOTER */}
-<footer className="relative overflow-hidden bg-black text-white border-t border-slate-800">
+ <footer className="relative overflow-hidden bg-black text-white border-t border-slate-800">
 
   {/* GLOW */}
   <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full"></div>
@@ -1296,16 +1181,12 @@ function App() {
   </div>
 </footer>
 
-    </div>
-  } />
-
-      {/* LOGIN PAGE */}
-      <Route path="/login" element={<Login />} />
-
-    </Routes>
-  </BrowserRouter>
-  
-   );
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
