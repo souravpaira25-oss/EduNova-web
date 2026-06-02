@@ -33,6 +33,8 @@ function Signup() {
     });
 
     const data = await res.text();
+    console.log("Status:", res.status);
+console.log("Response:", data);
     alert(data);
     if (res.ok) {
       navigate("/check-email");
