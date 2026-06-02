@@ -9,6 +9,9 @@ import Courses from "./Courses";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import CoursePage from "./CoursePage";
 import Navbar from "./components/Navbar";
+import CheckEmail from "./CheckEmail";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
 
 function App() {
   const [ setCourses] = useState([]);
@@ -40,6 +43,9 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/course/:id" element={<CoursePage />} />
+        <Route path="/check-email" element={<CheckEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         
         <Route
           path="/my-courses"

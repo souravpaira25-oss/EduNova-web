@@ -35,7 +35,7 @@ function Signup() {
     const data = await res.text();
     alert(data);
     if (res.ok) {
-      navigate("/login");
+      navigate("/check-email");
     }
   };
 
