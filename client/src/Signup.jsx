@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +34,9 @@ function Signup() {
 
     const data = await res.text();
     alert(data);
+    if (res.ok) {
+      navigate("/login");
+    }
   };
 
   return (

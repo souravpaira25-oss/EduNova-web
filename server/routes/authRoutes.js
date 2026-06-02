@@ -18,7 +18,7 @@ router.post("/signup", async (req, res) => {
 
   await user.save();
 
-  res.send("User created ✅");
+  res.send("Sign up Complete✅");
 });
 
 // login
