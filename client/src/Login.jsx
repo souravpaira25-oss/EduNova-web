@@ -195,7 +195,7 @@ function Login() {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p
+        {/* <p
   style={{
     marginTop: "12px",
     textAlign: "right",
@@ -205,7 +205,7 @@ function Login() {
   onClick={() => window.location.href = "/forgot-password"}
 >
   Forgot Password?
-</p>
+</p> */}
 
         <p style={{ marginTop: "20px", color: "#94a3b8" }}>
           Don’t have an account?{" "}
