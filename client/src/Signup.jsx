@@ -37,7 +37,7 @@ function Signup() {
 console.log("Response:", data);
     alert(data);
     if (res.ok) {
-      navigate("/check-email");
+      navigate("/login");
     }
   };
 
