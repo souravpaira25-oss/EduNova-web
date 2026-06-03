@@ -15,6 +15,7 @@ import ResetPassword from "./ResetPassword";
 
 function App() {
   const [ setCourses] = useState([]);
+  const [showDemo, setShowDemo] = useState(false);
 
   useEffect(() => {
     fetch("https://edunova-web-backend.onrender.com/api/courses")
@@ -100,10 +101,10 @@ function App() {
 
                       <button
                         className="w-full sm:w-auto px-8 py-4 lg:py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-semibold text-base lg:text-lg hover:bg-slate-800 transition-all duration-300"
-                        onClick={() => window.open("https://www.youtube.com/watch?v=YOUR_VIDEO_ID", "_blank")}
+                       onClick={() => setShowDemo(true)}
                       >
-                        🎬 Watch Demo
-                      </button>
+                     🎬 Watch Demo
+                    </button>
                     </div>
                   </div>
 
@@ -992,11 +993,12 @@ onClick={() => window.location.href = "/courses"}
   🚀 Explore Courses
 </button>
 
-        <button className="w-full sm:w-auto px-8 py-4 lg:py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-bold text-base lg:text-xl hover:bg-slate-800 transition-all duration-300">
-
-          Watch Demo ▶
-
-        </button>
+        <button
+  className="w-full sm:w-auto px-8 py-4 lg:py-5 rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl text-white font-semibold text-base lg:text-lg hover:bg-slate-800 transition-all duration-300"
+  onClick={() => setShowDemo(true)}
+>
+  🎬 Watch Demo
+</button>
 
       </div>
     </div>
@@ -1115,6 +1117,34 @@ onClick={() => window.location.href = "/courses"}
     </div>
   </div>
 </footer>
+{showDemo && (
+  <div
+    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+    onClick={() => setShowDemo(false)}
+  >
+    <div
+      className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-cyan-500/20 bg-slate-950"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        onClick={() => setShowDemo(false)}
+        className="absolute top-4 right-4 z-10 h-10 w-10 rounded-full bg-black/60 text-white hover:bg-red-500"
+      >
+        ✕
+      </button>
+
+      <div className="aspect-video">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/zSKDd2cXkKU?autoplay=1"
+          title="EduNova Demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    </div>
+  </div>
+)}
 
             </div>
           }
