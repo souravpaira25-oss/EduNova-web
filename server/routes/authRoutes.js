@@ -21,40 +21,15 @@ router.post("/signup", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-
-    const verificationLink =
-      `https://edunova-web-backend.onrender.com/api/auth/verify-email/${verificationToken}`;
-
     const user = new User({
       name,
       email,
       password: hashedPassword,
-      verificationToken,
-      isVerified: false,
+      verificationToken: null,
+      isVerified: true,
     });
 
     await user.save();
-
-    try {
-      await transporter.sendMail({
-        from: "souravpaira374@gmail.com",
-        to: email,
-        subject: "Verify your EduNova account",
-        html: `
-          <h2>Welcome to EduNova 🚀</h2>
-          <p>Click below to verify your account:</p>
-
-          <a href="${verificationLink}">
-            Verify Email
-          </a>
-        `,
-      });
-
-      console.log("MAIL SENT SUCCESSFULLY");
-    } catch (mailError) {
-      console.error("MAIL ERROR =>", mailError);
-    }
 
     res.send("Sign up Complete✅");
   } catch (err) {
@@ -74,11 +49,11 @@ router.post("/login", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (!user.isVerified) {
-  return res.status(401).json({
-    message: "Please verify your email first"
-  });
-}
+//     if (!user.isVerified) {
+//   return res.status(401).json({
+//     message: "Please verify your email first"
+//   });
+// }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
