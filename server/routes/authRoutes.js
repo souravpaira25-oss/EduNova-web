@@ -10,44 +10,57 @@ const transporter = require("../config/mailer");
 
 // signup
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
-  
-  const existingUser = await User.findOne({ email });
+  try {
+    const { name, email, password } = req.body;
 
-if (existingUser) {
-  return res.status(400).send("Email already registered");
-}
+    const existingUser = await User.findOne({ email });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+    if (existingUser) {
+      return res.status(400).send("Email already registered");
+    }
 
-const verificationToken = crypto.randomBytes(32).toString("hex");
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-const verificationLink = `https://edunova-web-backend.onrender.com/api/auth/verify-email/${verificationToken}`;
+    const verificationToken = crypto.randomBytes(32).toString("hex");
 
-const user = new User({
-  name,
-  email,
-  password: hashedPassword,
-  verificationToken,
-  isVerified: false
-});
-  await user.save();
+    const verificationLink =
+      `https://edunova-web-backend.onrender.com/api/auth/verify-email/${verificationToken}`;
 
-await transporter.sendMail({
-  from: "souravpaira374@gmail.com",
-  to: email,
-  subject: "Verify your EduNova account",
-  html: `
-    <h2>Welcome to EduNova 🚀</h2>
-    <p>Click below to verify your account:</p>
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      verificationToken,
+      isVerified: false,
+    });
 
-    <a href="${verificationLink}">
-      Verify Email
-    </a>
-  `,
-});
+    await user.save();
 
-  res.send("Sign up Complete✅");
+    try {
+      await transporter.sendMail({
+        from: "souravpaira374@gmail.com",
+        to: email,
+        subject: "Verify your EduNova account",
+        html: `
+          <h2>Welcome to EduNova 🚀</h2>
+          <p>Click below to verify your account:</p>
+
+          <a href="${verificationLink}">
+            Verify Email
+          </a>
+        `,
+      });
+
+      console.log("MAIL SENT SUCCESSFULLY");
+    } catch (mailError) {
+      console.error("MAIL ERROR =>", mailError);
+    }
+
+    res.send("Sign up Complete✅");
+  } catch (err) {
+    console.error("SIGNUP ERROR =>", err);
+    res.status(500).send("Server Error");
+  }
 });
 
 // login
