@@ -112,7 +112,7 @@ function Courses() {
 
         <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: "15px",
             marginTop: "50px"
           }}>
@@ -124,7 +124,8 @@ function Courses() {
               <div
                 key={course._id}
                 style={{
-                  width: "100px",
+                  width: "100%",
+                  minwidth: "0",
                   background: "#1e293b",
                   borderRadius: "12px",
                   overflow: "hidden",
