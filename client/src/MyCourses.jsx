@@ -81,7 +81,7 @@ function MyCourses() {
                   {/* IMAGE */}
                   <div className="relative overflow-hidden">
                     <img
-                      src={`https://edunova-web-backend.onrender.com/uploads/${course.image}`}
+                      src={`https://edunova-web-backend.onrender.com/${course.image}`}
                       alt={course.title}
                       className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500"
                     />

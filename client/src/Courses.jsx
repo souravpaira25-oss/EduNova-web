@@ -134,6 +134,7 @@ function Courses() {
                 }}
               >
 
+
                 {/* IMAGE */}
                 <img
                   src={course.image}

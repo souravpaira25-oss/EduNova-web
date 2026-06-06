@@ -24,7 +24,7 @@ const CoursePage = () => {
     })
       .then((res) => {
         if (res.status === 403) {
-          setLocked(true);
+          setLocked(true);  
           return null;
         }
         return res.json();
