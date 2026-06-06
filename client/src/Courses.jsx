@@ -111,12 +111,11 @@ function Courses() {
         </h1>
 
         <div style={{
-          display: "flex",
-          marginTop: "50px",
-          gap: "25px",
-          flexWrap: "wrap",
-          justifyContent: "center"
-        }}>
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
+            gap: "15px",
+            marginTop: "50px"
+          }}>
 
           {courses.map((course) => {
             // const isPurchased = purchased.includes(course._id.toString());
@@ -125,7 +124,7 @@ function Courses() {
               <div
                 key={course._id}
                 style={{
-                  width: "310px",
+                  width: "100px",
                   background: "#1e293b",
                   borderRadius: "12px",
                   overflow: "hidden",
@@ -140,7 +139,7 @@ function Courses() {
                   alt="course"
                   style={{
                     width: "100%",
-                    height: "180px",
+                    height: "120px",
                     objectFit: "cover"
                   }}
                 />
@@ -156,7 +155,7 @@ function Courses() {
 
                   <div>
                     <h3>{course.title}</h3>
-                    <p style={{ color: "#94a3b8", fontSize: "14px" }}>
+                    <p style={{ color: "#94a3b8", fontSize: "14px", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                       {course.description}
                     </p>
                   </div>
