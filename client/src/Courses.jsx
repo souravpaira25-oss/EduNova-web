@@ -110,12 +110,14 @@ function Courses() {
           Explore Courses 
         </h1>
 
-        <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "15px",
-            marginTop: "50px"
-          }}>
+        <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "20px",
+    marginTop: "50px",
+  }}
+>
 
           {courses.map((course) => {
             // const isPurchased = purchased.includes(course._id.toString());
@@ -124,8 +126,8 @@ function Courses() {
               <div
                 key={course._id}
                 style={{
-                  width: "100%",
-                  minwidth: "0",
+                  // width: "100%",
+                  minWidth: "0",
                   background: "#1e293b",
                   borderRadius: "12px",
                   overflow: "hidden",
@@ -141,7 +143,7 @@ function Courses() {
                   alt="course"
                   style={{
                     width: "100%",
-                    height: "120px",
+                    height: "180px",
                     objectFit: "cover"
                   }}
                 />
