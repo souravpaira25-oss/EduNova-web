@@ -38,26 +38,37 @@ function Login() {
       const data = await res.json();
 
       if (data.token) {
+  console.log("LOGIN SUCCESS");
+  console.log("USER ID:", data.userId);
+
   localStorage.setItem("token", data.token);
 
-    const fcmToken = await requestNotificationPermission();
+  const fcmToken = await requestNotificationPermission();
 
-    await fetch(
-      "https://edunova-web-backend.onrender.com/api/auth/save-fcm-token",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: data.userId,
-          fcmToken,
-        }),
-      }
-    );
+  console.log("FCM TOKEN:", fcmToken);
 
-    window.location.href = "/";
-  } else {
+  console.log("CALLING SAVE TOKEN API");
+
+  const saveRes = await fetch(
+    "https://edunova-web-backend.onrender.com/api/auth/save-fcm-token",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: data.userId,
+        fcmToken,
+      }),
+    }
+  );
+
+  const saveData = await saveRes.json();
+
+  console.log("SAVE RESPONSE:", saveData);
+
+  window.location.href = "/";
+} else {
   alert(data.message || "Login failed ❌");
 }
 
