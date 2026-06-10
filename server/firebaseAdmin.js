@@ -1,14 +1,11 @@
-const admin = require("firebase-admin");
+const { initializeApp, cert } = require("firebase-admin/app");
 
-console.log("ADMIN KEYS:", Object.keys(admin));
-console.log("CREDENTIAL:", admin.credential);
-
-admin.initializeApp({
-  credential: admin.credential.cert({
+initializeApp({
+  credential: cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
   }),
 });
 
-module.exports = admin;
+module.exports = require("firebase-admin");
