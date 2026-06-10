@@ -12,10 +12,15 @@ import Navbar from "./components/Navbar";
 import CheckEmail from "./CheckEmail";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
+import { requestNotificationPermission } from "./utils/notification";
 
 function App() {
   const [ setCourses] = useState([]);
   const [showDemo, setShowDemo] = useState(false);
+  
+   useEffect(() => {
+    requestNotificationPermission();
+  }, []);
 
   useEffect(() => {
     fetch("https://edunova-web-backend.onrender.com/api/courses")

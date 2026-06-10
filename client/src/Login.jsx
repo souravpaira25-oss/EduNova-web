@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import { requestNotificationPermission } from "./utils/notification";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -37,11 +38,28 @@ function Login() {
       const data = await res.json();
 
       if (data.token) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
-      } else {
-        alert(data.message || "Login failed ❌");
+  localStorage.setItem("token", data.token);
+
+    const fcmToken = await requestNotificationPermission();
+
+    await fetch(
+      "https://edunova-web-backend.onrender.com/api/auth/save-fcm-token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: data.userId,
+          fcmToken,
+        }),
       }
+    );
+
+    window.location.href = "/";
+  } else {
+  alert(data.message || "Login failed ❌");
+}
 
     } catch (error) {
       console.log(error);

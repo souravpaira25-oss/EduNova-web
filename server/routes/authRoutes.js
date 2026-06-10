@@ -67,10 +67,11 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.json({
-      message: "Login successful",
-      token,
-    });
+   res.json({
+  message: "Login successful",
+  token,
+  userId: user._id,
+});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
@@ -167,6 +168,29 @@ router.post("/reset-password/:token", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");
+  }
+});
+
+router.post("/save-fcm-token", async (req, res) => {
+  console.log("SAVE TOKEN API HIT");
+  console.log(req.body);
+  try {
+    const { userId, fcmToken } = req.body;
+
+    await User.findByIdAndUpdate(userId, {
+      fcmToken,
+    });
+
+    res.json({
+      success: true,
+      message: "FCM Token Saved",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 });
 

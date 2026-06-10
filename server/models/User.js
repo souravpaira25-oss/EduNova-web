@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: {
          type: String,
         default: null
-}
+    },
+    fcmToken: {
+        type: String,
+        default: ""
+    }
 });
 
 module.exports = mongoose.model("User", userSchema);
