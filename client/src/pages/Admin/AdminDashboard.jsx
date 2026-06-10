@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const AdminDashboard = () => {
+
+  const [notificationTitle, setNotificationTitle] = useState("");
+const [notificationBody, setNotificationBody] = useState("");
   const [active, setActive] = useState("dashboard");
 
   const [title, setTitle] = useState("");
@@ -198,6 +201,28 @@ const handleDelete = async (id) => {
   // UI refresh without reload
   setCourses(courses.filter(c => c._id !== id));
 };
+const sendNotification = async () => {
+  const res = await fetch(
+    "https://edunova-web-backend.onrender.com/api/auth/send-notification",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: notificationTitle,
+        body: notificationBody,
+      }),
+    }
+  );
+
+  const data = await res.json();
+
+  alert(data.message);
+
+  setNotificationTitle("");
+  setNotificationBody("");
+};
 
   return (
     <div style={{
@@ -241,6 +266,14 @@ const handleDelete = async (id) => {
 </div>
       </div>
 
+
+      <div
+  onClick={() => setActive("notifications")}
+  style={menu(active === "notifications")}
+>
+  Notifications
+</div>
+
       {/* Content */}
       <div style={{ flex: 1, padding: "40px" }}>
 
@@ -250,6 +283,7 @@ const handleDelete = async (id) => {
           {active === "editCourses" && "Edit Courses"}
           {active === "addVideo" && "Add Video"}
           {active === "editVideos" && "Edit Videos"}
+          {active === "notifications" && "Send Notifications"}
         </h1>
 
         {/* Dashboard */}
@@ -508,6 +542,31 @@ const handleDelete = async (id) => {
       </div>
     ))}
 
+  </div>
+)}
+
+{active === "notifications" && (
+  <div style={formCard}>
+    <input
+      placeholder="Notification Title"
+      style={input}
+      value={notificationTitle}
+      onChange={(e) => setNotificationTitle(e.target.value)}
+    />
+
+    <textarea
+      placeholder="Notification Message"
+      style={{ ...input, height: "100px" }}
+      value={notificationBody}
+      onChange={(e) => setNotificationBody(e.target.value)}
+    />
+
+    <button
+      onClick={sendNotification}
+      style={button}
+    >
+      Send Notification 🚀
+    </button>
   </div>
 )}
         

@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const crypto = require("crypto");
 const transporter = require("../config/mailer");
+const admin = require("../firebaseAdmin");
+const { getMessaging } = require("firebase-admin/messaging");
 
 
 
@@ -171,6 +173,7 @@ router.post("/reset-password/:token", async (req, res) => {
   }
 });
 
+// ForNotification
 router.post("/save-fcm-token", async (req, res) => {
   console.log("SAVE TOKEN API HIT");
   console.log(req.body);
@@ -194,4 +197,74 @@ router.post("/save-fcm-token", async (req, res) => {
   }
 });
 
+// send notification
+router.post("/send-test-notification", async (req, res) => {
+
+  try {
+    // console.log("REQUEST RECEIVED");
+    // console.log(req.body)
+    const { userId } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user || !user.fcmToken) {
+      return res.status(404).json({
+        success: false,
+        message: "FCM token not found",
+      });
+    }
+
+    await getMessaging().send({
+  token: user.fcmToken,
+  notification: {
+    title: "📚 EduNova",
+    body: "Keep your learning streak alive! Visit EduNova today 🚀",
+  },
+});
+
+    res.json({
+      success: true,
+      message: "Notification sent successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Notification admin route
+router.post("/send-notification", async (req, res) => {
+  try {
+    const { title, body } = req.body;
+
+    const users = await User.find({
+      fcmToken: { $exists: true, $ne: "" }
+    });
+
+    for (const user of users) {
+      await getMessaging().send({
+        token: user.fcmToken,
+        notification: {
+          title,
+          body,
+        },
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Notification sent to all users 🚀",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 module.exports = router;
