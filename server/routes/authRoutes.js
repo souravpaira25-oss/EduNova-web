@@ -238,6 +238,7 @@ router.post("/send-test-notification", async (req, res) => {
 
 // Notification admin route
 router.post("/send-notification", async (req, res) => {
+  console.log("SEND NOTIFICATION ROUTE LOADED");
   try {
     const { title, body } = req.body;
 
