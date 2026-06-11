@@ -238,7 +238,6 @@ router.post("/send-test-notification", async (req, res) => {
 
 // Notification admin route
 router.post("/send-notification", async (req, res) => {
-  console.log("SEND NOTIFICATION ROUTE LOADED");
   try {
     const { title, body } = req.body;
 
@@ -249,10 +248,18 @@ router.post("/send-notification", async (req, res) => {
     for (const user of users) {
       await getMessaging().send({
         token: user.fcmToken,
+
         notification: {
           title,
           body,
         },
+
+        webpush: {
+          notification: {
+            icon: "https://edu-nova-web.vercel.app/logo.png",
+            badge: "https://edu-nova-web.vercel.app/logo.png"
+          }
+        }
       });
     }
 
