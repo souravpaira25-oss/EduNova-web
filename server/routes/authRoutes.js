@@ -314,19 +314,20 @@ router.get("/users-with-courses", async (req, res) => {
     const users = await User.find().select("-password");
 
     const purchases = await Purchase.find()
-      .populate("userId")
       .populate("courseId");
 
     const result = users.map((user) => {
       const userPurchases = purchases.filter(
-        (p) => p.userId?._id.toString() === user._id.toString()
+        (p) => p.userId === user._id.toString()
       );
 
       return {
         ...user._doc,
-        purchasedCourses: userPurchases.map(
-          (p) => p.courseId?.title
-        ),
+
+        purchasedCourses: userPurchases
+          .filter((p) => p.courseId)
+          .map((p) => p.courseId.title),
+
         totalPurchases: userPurchases.length,
       };
     });
