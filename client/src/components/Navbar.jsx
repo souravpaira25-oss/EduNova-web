@@ -18,7 +18,9 @@ const Navbar = () => {
         borderBottom: "1px solid #1e293b",
         boxSizing: "border-box",
         boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
-        position: "relative",
+        position: "sticky",
+        top: "0",
+        zIndex: "9999",
       }}
     >
       {/* LOGO */}

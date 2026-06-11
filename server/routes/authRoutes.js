@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Course = require("../models/Course");
 const Purchase = require("../models/Purchase");
 const crypto = require("crypto");
 const transporter = require("../config/mailer");
@@ -343,10 +344,6 @@ router.get("/users-with-courses", async (req, res) => {
 // dashboard stats
 router.get("/dashboard-stats", async (req, res) => {
   try {
-    const User = require("../models/User");
-    const Course = require("../models/Course");
-    const Purchase = require("../models/Purchase");
-
     const users = await User.countDocuments();
     const courses = await Course.countDocuments();
 
