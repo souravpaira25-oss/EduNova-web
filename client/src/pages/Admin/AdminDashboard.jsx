@@ -3,6 +3,22 @@ import React, { useState, useEffect } from "react";
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
 
+const [isMobile, setIsMobile] = useState(
+  window.innerWidth < 768
+);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
   const [notificationTitle, setNotificationTitle] = useState("");
 const [notificationBody, setNotificationBody] = useState("");
   const [active, setActive] = useState("dashboard");
@@ -270,6 +286,7 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
   return (
     <div style={{
       display: "flex",
+      flexDirection: isMobile ? "column" : "row",
       height: "100vh",
       background: "linear-gradient(135deg, #0f172a, #020617)",
       color: "#e2e8f0"
@@ -277,7 +294,7 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
 
       {/* Sidebar */}
       <div style={{
-        width: "250px",
+        width: isMobile ? "100%" : "250px",
         padding: "25px",
         background: "#020617",
         borderRight: "1px solid #1e293b"
@@ -354,7 +371,9 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: isMobile
+          ? "1fr"
+          : "repeat(4, 1fr)",
         gap: "20px",
       }}
     >
@@ -393,7 +412,9 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 2fr 1fr 2fr 120px 120px",
+        gridTemplateColumns: isMobile
+        ? "1fr"
+        : "1fr 2fr 1fr 2fr 1fr 120px",
         padding: "15px 20px",
         background: "#0f172a",
         borderRadius: "12px",
