@@ -257,6 +257,7 @@ router.post("/send-notification", async (req, res) => {
         webpush: {
           notification: {
             icon: "https://edu-nova-web.vercel.app/logo.png",
+            image: "https://edu-nova-web.vercel.app/banner.png"
           }
         }
       });
