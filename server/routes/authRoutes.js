@@ -339,4 +339,35 @@ router.get("/users-with-courses", async (req, res) => {
     });
   }
 });
+
+// dashboard stats
+router.get("/dashboard-stats", async (req, res) => {
+  try {
+    const User = require("../models/User");
+    const Course = require("../models/Course");
+    const Purchase = require("../models/Purchase");
+
+    const users = await User.countDocuments();
+    const courses = await Course.countDocuments();
+
+    const purchases = await Purchase.find().populate("courseId");
+
+    const totalPurchases = purchases.length;
+
+    const totalRevenue = purchases.reduce((sum, purchase) => {
+      return sum + (purchase.courseId?.price || 0);
+    }, 0);
+
+    res.json({
+      users,
+      courses,
+      totalPurchases,
+      totalRevenue,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 module.exports = router;

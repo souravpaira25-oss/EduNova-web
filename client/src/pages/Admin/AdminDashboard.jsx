@@ -26,6 +26,19 @@ const [editVideoMode, setEditVideoMode] = useState(false);
 const [editVideoIndex, setEditVideoIndex] = useState(null);
 const [editVideoCourseId, setEditVideoCourseId] = useState(null);
 
+const [stats, setStats] = useState({
+  users: 0,
+  courses: 0,
+  totalPurchases: 0,
+  totalRevenue: 0,
+});
+const cardStyle = {
+  background: "#1e293b",
+  padding: "25px",
+  borderRadius: "15px",
+  textAlign: "center",
+};
+
 const handleAddVideo = async () => {
   if (!selectedCourse) return alert("Select course");
 
@@ -246,9 +259,13 @@ const sendNotification = async () => {
 };
 
 // fetch all users (for admin dashboard)
-fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
+fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
   .then((res) => res.json())
   .then((data) => setUsers(data));
+
+  fetch("https://edunova-web-backend.onrender.com/api/auth/dashboard-stats")
+  .then((res) => res.json())
+  .then((data) => setStats(data));
 
   return (
     <div style={{
@@ -323,27 +340,7 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
 
         {/* Dashboard */}
         {active === "dashboard" && (
-          <div style={{ display: "flex", gap: "20px" }}>
-            <div style={card}>
-              <p>Users</p>
-              <h2>{users.length}</h2>
-            </div>
-
-            <div style={card}>
-              <p>Courses</p>
-              <h2>{courses.length}</h2>
-            </div>
-          </div>
-        )}
-        {/* Users */}
-        {active === "users" && (
-          <div
-            style={{
-              maxWidth: "1100px",
-              margin: "40px auto",
-              color: "white",
-            }}
-          >
+  <div>
     {/* <h1
       style={{
         textAlign: "center",
@@ -351,14 +348,52 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
         marginBottom: "30px",
       }}
     >
-      Users
+      Dashboard
     </h1> */}
 
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "20px",
+      }}
+    >
+      <div style={card}>
+        <p style={{ fontSize: "18px" }}>👥 Users</p>
+        <h1>{stats.users}</h1>
+      </div>
+
+      <div style={card}>
+        <p style={{ fontSize: "18px" }}>📚 Courses</p>
+        <h1>{stats.courses}</h1>
+      </div>
+
+      <div style={card}>
+        <p style={{ fontSize: "18px" }}>🛒 Purchases</p>
+        <h1>{stats.totalPurchases}</h1>
+      </div>
+
+      <div style={card}>
+        <p style={{ fontSize: "18px" }}>💰 Revenue</p>
+        <h1>₹{stats.totalRevenue}</h1>
+      </div>
+    </div>
+  </div>
+)}
+        {/* Users */}
+        {active === "users" && (
+          <div
+    style={{
+      maxWidth: "1300px",
+      margin: "40px auto",
+      color: "white",
+    }}
+  >
     {/* Header */}
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 2fr 1fr 120px",
+        gridTemplateColumns: "1fr 2fr 1fr 2fr 120px 120px",
         padding: "15px 20px",
         background: "#0f172a",
         borderRadius: "12px",
@@ -370,22 +405,22 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
       <div>Name</div>
       <div>Email</div>
       <div>Joined</div>
+      <div>Purchased Courses</div>
+      <div>Total</div>
       <div>Action</div>
     </div>
 
-    {/* Users */}
     {users.map((user) => (
       <div
         key={user._id}
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 2fr 1fr 120px",
+          gridTemplateColumns: "1fr 2fr 1fr 2fr 120px 120px",
           alignItems: "center",
           background: "#1e293b",
           padding: "18px 20px",
           borderRadius: "12px",
           marginBottom: "12px",
-          transition: "0.3s",
         }}
       >
         <div>
@@ -398,6 +433,30 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
           {user.createdAt
             ? new Date(user.createdAt).toLocaleDateString()
             : "Old User"}
+        </div>
+
+        <div
+          style={{
+            color: "#94a3b8",
+            fontSize: "14px",
+          }}
+        >
+          {user.purchasedCourses?.length > 0
+            ? user.purchasedCourses.join(", ")
+            : "No Course"}
+        </div>
+
+        <div>
+          <span
+            style={{
+              background: "#22c55e",
+              padding: "6px 12px",
+              borderRadius: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            {user.totalPurchases || 0}
+          </span>
         </div>
 
         <button
@@ -415,7 +474,7 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
         </button>
       </div>
     ))}
-  </div>
+          </div>
         )}
 
         {/* Edit Courses */}
