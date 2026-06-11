@@ -1,24 +1,10 @@
 import React, { useState } from "react";
-import React, { useState, useEffect } from "react";
 import { FaBook, FaUser, FaSignInAlt, FaEllipsisV } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-useEffect(() => {
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 20);
-  };
-
-  window.addEventListener("scroll", handleScroll);
-
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, []);
 
   return (
     <div
@@ -29,23 +15,9 @@ useEffect(() => {
         alignItems: "center",
         padding: "10px 15px",
         background: "linear-gradient(90deg, #020617, #0f172a)",
-        background: scrolled
-          ? "rgba(2, 6, 23, 0.95)"
-          : "rgba(2, 6, 23, 0.75)",
-              
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-              
-        borderBottom: scrolled
-          ? "1px solid rgba(255,255,255,0.08)"
-          : "1px solid transparent",
-              
-        boxShadow: scrolled
-          ? "0 8px 30px rgba(0,0,0,0.4)"
-          : "none",
-              
-        transition: "all 0.3s ease",
-              
+        borderBottom: "1px solid #1e293b",
+        boxSizing: "border-box",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
         position: "fixed",
         top: "0",
         left: "0",
