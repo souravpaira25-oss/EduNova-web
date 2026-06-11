@@ -18,14 +18,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+
     resetPasswordToken: {
-         type: String,
+        type: String,
         default: null
     },
+
     fcmToken: {
         type: String,
         default: ""
     }
+},
+{
+    timestamps: true
 });
 
 module.exports = mongoose.model("User", userSchema);
