@@ -289,4 +289,21 @@ router.get("/all-users", async (req, res) => {
     });
   }
 });
+
+// delete user (for admin)
+router.delete("/delete-user/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}); 
 module.exports = router;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const AdminDashboard = () => {
+  const [users, setUsers] = useState([]);
 
   const [notificationTitle, setNotificationTitle] = useState("");
 const [notificationBody, setNotificationBody] = useState("");
@@ -105,7 +106,7 @@ const handleAddVideo = async () => {
     alert("Course Added 🚀");
     window.location.reload();
   };
-
+// Delete Video
   const handleDeleteVideo = async (courseId, index) => {
     
   await fetch(`https://edunova-web-backend.onrender.com/api/courses/delete-video/${courseId}/${index}`, {
@@ -116,7 +117,7 @@ const handleAddVideo = async () => {
   window.location.reload();
 };
 
-
+// Add Video
 const handleEditVideo = (courseId, video, index) => {
   setActive("addVideo");
 
@@ -128,7 +129,7 @@ const handleEditVideo = (courseId, video, index) => {
   setEditVideoIndex(index);
   setEditVideoCourseId(courseId);
 };
-
+// Update Video
 const handleUpdateVideo = async () => {
   await fetch(`https://edunova-web-backend.onrender.com/api/courses/update-video/${editVideoCourseId}/${editVideoIndex}`, {
     method: "PUT",
@@ -145,6 +146,22 @@ const handleUpdateVideo = async () => {
 
   setEditVideoMode(false);
   window.location.reload();
+};
+
+// DELETE USER
+const deleteUser = async (id) => {
+  const res = await fetch(
+    `https://edunova-web-backend.onrender.com/api/auth/delete-user/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  const data = await res.json();
+
+  alert(data.message);
+
+  setUsers(users.filter((u) => u._id !== id));
 };
   
   
@@ -184,6 +201,8 @@ const handleUpdateVideo = async () => {
   alert("Updated 🔥");
   window.location.reload();
 };
+
+// delete course fetch
 const handleDelete = async (id) => {
   const confirmDelete = window.confirm("Delete this course? ❌");
 
@@ -201,6 +220,8 @@ const handleDelete = async (id) => {
   // UI refresh without reload
   setCourses(courses.filter(c => c._id !== id));
 };
+
+// Notification Fetch Section
 const sendNotification = async () => {
   const res = await fetch(
     "https://edunova-web-backend.onrender.com/api/auth/send-notification",
@@ -224,6 +245,11 @@ const sendNotification = async () => {
   setNotificationBody("");
 };
 
+// fetch all users (for admin dashboard)
+fetch("https://edunova-web-backend.onrender.com/api/auth/all-users")
+  .then((res) => res.json())
+  .then((data) => setUsers(data));
+
   return (
     <div style={{
       display: "flex",
@@ -244,6 +270,12 @@ const sendNotification = async () => {
         <div onClick={() => setActive("dashboard")} style={menu(active === "dashboard")}>
           Dashboard
         </div>
+        <div
+  onClick={() => setActive("users")}
+  style={menu(active === "users")}
+>
+  Users
+</div>
 
         <div onClick={() => setActive("addCourse")} style={menu(active === "addCourse")}>
           Add Course
@@ -264,15 +296,17 @@ const sendNotification = async () => {
 >
   Edit Videos
 </div>
-      </div>
-
 
       <div
-  onClick={() => setActive("notifications")}
-  style={menu(active === "notifications")}
->
-  Notifications
-</div>
+         onClick={() => setActive("notifications")}
+        style={menu(active === "notifications")}
+      >
+        Notifications
+      </div>
+ </div>
+
+
+
 
       {/* Content */}
       <div style={{ flex: 1, padding: "40px" }}>
@@ -284,6 +318,7 @@ const sendNotification = async () => {
           {active === "addVideo" && "Add Video"}
           {active === "editVideos" && "Edit Videos"}
           {active === "notifications" && "Send Notifications"}
+          {active === "users" && "Users"}
         </h1>
 
         {/* Dashboard */}
@@ -291,7 +326,7 @@ const sendNotification = async () => {
           <div style={{ display: "flex", gap: "20px" }}>
             <div style={card}>
               <p>Users</p>
-              <h2>0</h2>
+              <h2>{users.length}</h2>
             </div>
 
             <div style={card}>
@@ -299,6 +334,88 @@ const sendNotification = async () => {
               <h2>{courses.length}</h2>
             </div>
           </div>
+        )}
+        {/* Users */}
+        {active === "users" && (
+          <div
+            style={{
+              maxWidth: "1100px",
+              margin: "40px auto",
+              color: "white",
+            }}
+          >
+    {/* <h1
+      style={{
+        textAlign: "center",
+        fontSize: "60px",
+        marginBottom: "30px",
+      }}
+    >
+      Users
+    </h1> */}
+
+    {/* Header */}
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 2fr 1fr 120px",
+        padding: "15px 20px",
+        background: "#0f172a",
+        borderRadius: "12px",
+        marginBottom: "15px",
+        fontWeight: "bold",
+        color: "#38bdf8",
+      }}
+    >
+      <div>Name</div>
+      <div>Email</div>
+      <div>Joined</div>
+      <div>Action</div>
+    </div>
+
+    {/* Users */}
+    {users.map((user) => (
+      <div
+        key={user._id}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr 1fr 120px",
+          alignItems: "center",
+          background: "#1e293b",
+          padding: "18px 20px",
+          borderRadius: "12px",
+          marginBottom: "12px",
+          transition: "0.3s",
+        }}
+      >
+        <div>
+          <strong>{user.name}</strong>
+        </div>
+
+        <div>{user.email}</div>
+
+        <div>
+          {user.createdAt
+            ? new Date(user.createdAt).toLocaleDateString()
+            : "Old User"}
+        </div>
+
+        <button
+          onClick={() => deleteUser(user._id)}
+          style={{
+            background: "#ef4444",
+            color: "white",
+            border: "none",
+            padding: "10px",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    ))}
+  </div>
         )}
 
         {/* Edit Courses */}
@@ -429,6 +546,8 @@ const sendNotification = async () => {
 
           </div>
         )}
+
+        {/* add video */}
         {active === "addVideo" && (
   <div style={formCard}>
 
@@ -469,8 +588,10 @@ const sendNotification = async () => {
 </button>
 
   </div>
-)}
-{active === "editVideos" && (
+        )}
+
+        {/* Edit Videos */}
+        {active === "editVideos" && (
   <div>
 
     {courses.map((course) => (
@@ -543,9 +664,10 @@ const sendNotification = async () => {
     ))}
 
   </div>
-)}
+        )}
 
-{active === "notifications" && (
+        {/* notifications */}
+        {active === "notifications" && (
   <div style={formCard}>
     <input
       placeholder="Notification Title"
@@ -568,7 +690,7 @@ const sendNotification = async () => {
       Send Notification 🚀
     </button>
   </div>
-)}
+        )}
         
 
       </div>
