@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Purchase = require("../models/Purchase");
 const crypto = require("crypto");
 const transporter = require("../config/mailer");
 const admin = require("../firebaseAdmin");
@@ -306,4 +307,35 @@ router.delete("/delete-user/:id", async (req, res) => {
     });
   }
 }); 
+
+// Users with their purchased courses
+router.get("/users-with-courses", async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+
+    const purchases = await Purchase.find()
+      .populate("userId")
+      .populate("courseId");
+
+    const result = users.map((user) => {
+      const userPurchases = purchases.filter(
+        (p) => p.userId?._id.toString() === user._id.toString()
+      );
+
+      return {
+        ...user._doc,
+        purchasedCourses: userPurchases.map(
+          (p) => p.courseId?.title
+        ),
+        totalPurchases: userPurchases.length,
+      };
+    });
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 module.exports = router;
