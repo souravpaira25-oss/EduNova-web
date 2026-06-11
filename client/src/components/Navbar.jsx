@@ -18,8 +18,10 @@ const Navbar = () => {
         borderBottom: "1px solid #1e293b",
         boxSizing: "border-box",
         boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
-        position: "sticky",
+        position: "fixed",
         top: "0",
+        left: "0",
+        width: "100%",
         zIndex: "9999",
       }}
     >
