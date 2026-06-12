@@ -350,7 +350,9 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
 
       {/* Back To Home Button */}
       <div
-  onClick={() => window.open("/", "_blank")}
+  onClick={() => {
+    window.location.href = "https://edu-nova-web.vercel.app";
+  }}
   style={{
     marginTop: "30px",
     padding: "12px",
