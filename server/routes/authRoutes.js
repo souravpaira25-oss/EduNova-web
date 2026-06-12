@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
 // login
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -66,10 +66,12 @@ router.post("/login", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+  { userId: user._id },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: rememberMe ? "30d" : "1d",
+  }
+);
 
    res.json({
   message: "Login successful",

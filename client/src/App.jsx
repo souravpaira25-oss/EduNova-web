@@ -1049,7 +1049,7 @@ onClick={() => window.location.href = "/courses"}
 
         <div className="flex flex-col gap-4 text-slate-400">
 
-          <a href="#">Courses</a>
+          <a href="#courses">Courses</a>
           <a href="#">Projects</a>
           <a href="#">Certificates</a>
           <a href="#">Roadmaps</a>

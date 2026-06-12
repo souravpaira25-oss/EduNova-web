@@ -3,10 +3,11 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { requestNotificationPermission } from "./utils/notification";
 
 function Login() {
+  const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false); // 🔥 NEW
+  const [loading, setLoading] = useState(false); 
 
   const fullText = "Learn. Build. Get Hired 🚀";
 
@@ -32,7 +33,11 @@ function Login() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          email,
+          password,
+          rememberMe,
+          })
       });
 
       const data = await res.json();
@@ -204,6 +209,29 @@ function Login() {
             }}
           />
         </div>
+
+        <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "20px",
+    color: "#cbd5e1",
+    fontSize: "14px",
+  }}
+>
+  <input
+    type="checkbox"
+    checked={rememberMe}
+    onChange={(e) => setRememberMe(e.target.checked)}
+    style={{
+      marginRight: "8px",
+      cursor: "pointer",
+    }}
+  />
+  <label style={{ cursor: "pointer" }}>
+    Remember Me
+  </label>
+</div>
 
         {/*  UPDATED BUTTON */}
         <button
