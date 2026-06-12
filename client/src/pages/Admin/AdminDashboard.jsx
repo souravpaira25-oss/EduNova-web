@@ -304,6 +304,8 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
         <div onClick={() => setActive("dashboard")} style={menu(active === "dashboard")}>
           Dashboard
         </div>
+
+        {/* user Button */}
         <div
   onClick={() => setActive("users")}
   style={menu(active === "users")}
@@ -311,19 +313,25 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
   Users
 </div>
 
+      {/* Add Course Button */}
         <div onClick={() => setActive("addCourse")} style={menu(active === "addCourse")}>
           Add Course
         </div>
 
+      {/* Edit Courses Button */}
         <div onClick={() => setActive("editCourses")} style={menu(active === "editCourses")}>
           Edit Courses
         </div>
+
+        {/* Add Video Button */}
         <div
           onClick={() => setActive("addVideo")}
           style={menu(false)}
             >
               Add Video
         </div>
+
+        {/* Edit Videos Button */}
         <div
   onClick={() => setActive("editVideos")}
   style={menu(active === "editVideos")}
@@ -331,12 +339,32 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
   Edit Videos
 </div>
 
+
+      {/* Notifications Button */}
       <div
          onClick={() => setActive("notifications")}
         style={menu(active === "notifications")}
       >
         Notifications
       </div>
+
+      {/* Back To Home Button */}
+      <div
+  onClick={() => window.open("/", "_blank")}
+  style={{
+    marginTop: "30px",
+    padding: "12px",
+    textAlign: "center",
+    background: "#22c55e",
+    color: "white",
+    borderRadius: "10px",
+    cursor: "pointer",
+    fontWeight: "600",
+    transition: "0.3s",
+  }}
+>
+  🌐 Back to Website
+</div>
  </div>
 
 
