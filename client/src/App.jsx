@@ -101,7 +101,7 @@ function App() {
                         className="w-full sm:w-auto px-8 py-4 lg:py-5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-base lg:text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)] hover:scale-105 transition-all duration-300"
                         onClick={() => window.location.href = "/courses"}
                       >
-                        🚀 Explore Courses
+                        Explore Courses
                       </button>
 
                       <button
@@ -995,7 +995,7 @@ onClick={() => window.location.href = "/courses"}
   onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
   onMouseOut={(e) => e.target.style.transform = "scale(1)"}
 >
-  🚀 Explore Courses
+   Explore Courses
 </button>
 
         <button
@@ -1093,7 +1093,7 @@ onClick={() => window.location.href = "/courses"}
 
           <button className="bg-gradient-to-r from-cyan-500 to-blue-600 py-4 rounded-2xl font-bold hover:scale-105 transition-all duration-300">
 
-            Subscribe 🚀
+            Subscribe
 
           </button>
 
