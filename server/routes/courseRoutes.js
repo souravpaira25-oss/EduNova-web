@@ -40,7 +40,6 @@ router.post("/add", authMiddleware, upload.single("image"), async (req, res) => 
   }
 });
 
-
 //  Get All Courses
 router.get("/", async (req, res) => {
   try {
@@ -51,6 +50,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get Course Content for a User
 router.get("/:id/content", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -88,6 +88,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// Update Course
 router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
   try {
     const { title, price, description } = req.body;
@@ -114,6 +115,7 @@ router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 //  COURSE DELETE
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
@@ -144,6 +146,8 @@ router.post("/add-video/:courseId", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Delete video from course
 router.delete("/delete-video/:courseId/:videoIndex", async (req, res) => {
   const { courseId, videoIndex } = req.params;
 
@@ -162,6 +166,8 @@ router.delete("/delete-video/:courseId/:videoIndex", async (req, res) => {
     res.status(500).json({ msg: "Error deleting video" });
   }
 });
+
+// Update video in course
 router.put("/update-video/:courseId/:index", async (req, res) => {
   const { courseId, index } = req.params;
   const { title, videoUrl } = req.body;
