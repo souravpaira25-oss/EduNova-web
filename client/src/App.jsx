@@ -18,9 +18,9 @@ function App() {
   const [ setCourses] = useState([]);
   const [showDemo, setShowDemo] = useState(false);
   
-   useEffect(() => {
-    requestNotificationPermission();
-  }, []);
+  //  useEffect(() => {
+  //   requestNotificationPermission();
+  // }, []);
 
   useEffect(() => {
     fetch("https://edunova-web-backend.onrender.com/api/courses")
