@@ -20,7 +20,7 @@ useEffect(() => {
 }, []);
 
   const [notificationTitle, setNotificationTitle] = useState("");
-const [notificationBody, setNotificationBody] = useState("");
+  const [notificationBody, setNotificationBody] = useState("");
   const [active, setActive] = useState("dashboard");
 
   const [title, setTitle] = useState("");
@@ -35,14 +35,14 @@ const [notificationBody, setNotificationBody] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
   const [videoTitle, setVideoTitle] = useState("");
-const [videoUrl, setVideoUrl] = useState("");
-const [selectedCourse, setSelectedCourse] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
 
-const [editVideoMode, setEditVideoMode] = useState(false);
-const [editVideoIndex, setEditVideoIndex] = useState(null);
-const [editVideoCourseId, setEditVideoCourseId] = useState(null);
+  const [editVideoMode, setEditVideoMode] = useState(false);
+  const [editVideoIndex, setEditVideoIndex] = useState(null);
+  const [editVideoCourseId, setEditVideoCourseId] = useState(null);
 
-const [stats, setStats] = useState({
+  const [stats, setStats] = useState({
   users: 0,
   courses: 0,
   totalPurchases: 0,
@@ -333,11 +333,11 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
 
         {/* Edit Videos Button */}
         <div
-  onClick={() => setActive("editVideos")}
-  style={menu(active === "editVideos")}
->
-  Edit Videos
-</div>
+          onClick={() => setActive("editVideos")}
+          style={menu(active === "editVideos")}
+            >
+            Edit Videos
+        </div>
 
 
       {/* Notifications Button */}

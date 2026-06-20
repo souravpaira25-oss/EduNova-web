@@ -43,7 +43,7 @@ router.post("/add", authMiddleware, upload.single("image"), async (req, res) => 
 //  Get All Courses
 router.get("/", async (req, res) => {
   try {
-    const courses = await Course.find();
+    const courses = await Course.find().sort({ createdAt: -1 });
     res.json(courses);
   } catch (error) {
     res.status(500).json({ error: error.message });
