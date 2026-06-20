@@ -118,23 +118,40 @@ const handleAddVideo = async () => {
 
   // ADD COURSE
   const handleSubmit = async () => {
+  try {
     const formData = new FormData();
+
     formData.append("title", title);
     formData.append("price", price);
     formData.append("description", description);
     formData.append("image", imageFile);
 
-    await fetch("https://edunova-web-backend.onrender.com/api/courses/add", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
+    const res = await fetch(
+      "https://edunova-web-backend.onrender.com/api/courses/add",
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
       }
-    });
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Login First 🔒");
+      return;
+    }
 
     alert("Course Added 🚀");
     window.location.reload();
-  };
+
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong ❌");
+  }
+};
 // Delete Video
   const handleDeleteVideo = async (courseId, index) => {
     
