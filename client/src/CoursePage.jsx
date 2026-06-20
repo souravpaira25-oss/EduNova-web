@@ -204,7 +204,6 @@ const CoursePage = () => {
               Buy this course to unlock all premium videos
             </div>
           )}
-
         </div>
 
         {/* RIGHT IMAGE */}
