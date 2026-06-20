@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import CheckEmail from "./CheckEmail";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
-import { requestNotificationPermission } from "./utils/notification";
+// import { requestNotificationPermission } from "./utils/notification";
 
 function App() {
   const [ setCourses] = useState([]);
