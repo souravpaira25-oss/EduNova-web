@@ -310,7 +310,7 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
     }}>
 
       {/* Sidebar */}
-      <div style={{
+  <div style={{
         width: isMobile ? "100%" : "250px",
         padding: "25px",
         background: "#020617",
@@ -318,25 +318,32 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
       }}>
         <h2 style={{ marginBottom: "40px" }}>⚡ EduNova</h2>
 
-        <div onClick={() => setActive("dashboard")} style={menu(active === "dashboard")}>
+        {/* dashboard Button */}
+        <div
+          onClick={() => setActive("dashboard")}
+          style={menu(active === "dashboard")}>
           Dashboard
         </div>
 
         {/* user Button */}
         <div
-  onClick={() => setActive("users")}
-  style={menu(active === "users")}
->
-  Users
-</div>
+          onClick={() => setActive("users")}
+          style={menu(active === "users")}
+          >
+          Users
+        </div>
 
       {/* Add Course Button */}
-        <div onClick={() => setActive("addCourse")} style={menu(active === "addCourse")}>
+        <div
+         onClick={() => setActive("addCourse")}
+         style={menu(active === "addCourse")}>
           Add Course
         </div>
 
       {/* Edit Courses Button */}
-        <div onClick={() => setActive("editCourses")} style={menu(active === "editCourses")}>
+        <div
+           onClick={() => setActive("editCourses")} 
+           style={menu(active === "editCourses")}>
           Edit Courses
         </div>
 
@@ -367,24 +374,25 @@ fetch("https://edunova-web-backend.onrender.com/api/auth/users-with-courses")
 
       {/* Back To Home Button */}
       <div
-  onClick={() => {
-    window.location.href = "https://edu-nova-web.vercel.app";
-  }}
-  style={{
-    marginTop: "30px",
-    padding: "12px",
-    textAlign: "center",
-    background: "#22c55e",
-    color: "white",
-    borderRadius: "10px",
-    cursor: "pointer",
-    fontWeight: "600",
-    transition: "0.3s",
-  }}
->
-  🌐 Back to Website
-</div>
- </div>
+      onClick={() => {
+        window.location.href = "https://edu-nova-web.vercel.app";
+      }}
+      style={{
+        marginTop: "30px",
+        padding: "12px",
+        textAlign: "center",
+        background: "#22c55e",
+        color: "white",
+        borderRadius: "10px",
+        cursor: "pointer",
+        fontWeight: "600",
+        transition: "0.3s",
+      }}
+      >
+        🌐 Back to Website
+      </div>
+      
+  </div>
 
 
 
